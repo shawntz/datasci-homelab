@@ -17,7 +17,9 @@ services:
       - "${RSTUDIO_PORT:-8787}:8787"  # RStudio Server
       - "${JUPYTER_PORT:-8888}:8888"  # JupyterLab
     environment:
-      - DISABLE_AUTH=${DISABLE_AUTH:-true}
+      - DISABLE_AUTH=${DISABLE_AUTH:-false}
+      - RSTUDIO_PASSWORD=${RSTUDIO_PASSWORD:-rstudio}
+      - JUPYTER_TOKEN=${JUPYTER_TOKEN}
       - JUPYTER_ENABLE_LAB=yes
     volumes:
       # User home directory for projects, notebooks, and configs
