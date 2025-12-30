@@ -70,22 +70,12 @@ docker-compose pull
 
 **Pulling manually from GHCR:**
 ```bash
-docker pull ghcr.io/shawntz/datasci-homelab-rstudio:latest
-docker pull ghcr.io/shawntz/datasci-homelab-jupyter:latest
-
-# Or specific versions
-docker pull ghcr.io/shawntz/datasci-homelab-rstudio:v1.0.0
-docker pull ghcr.io/shawntz/datasci-homelab-jupyter:v1.0.0
+docker pull ghcr.io/shawntz/datasci-homelab:latest
 ```
 
 **Pulling manually from Docker Hub:**
 ```bash
-docker pull shawnschwartz/datasci-homelab-rstudio:latest
-docker pull shawnschwartz/datasci-homelab-jupyter:latest
-
-# Or specific versions
-docker pull shawnschwartz/datasci-homelab-rstudio:v1.0.0
-docker pull shawnschwartz/datasci-homelab-jupyter:v1.0.0
+docker pull shawnschwartz/datasci-homelab:latest
 ```
 
 ### Choosing Your Registry
@@ -99,7 +89,7 @@ By default, `docker-compose.yml` is configured to pull from GHCR. To switch to D
 
 1. Clone this repository:
    ```bash
-   git clone <your-repo-url> datasci-homelab
+   git clone https://github.com/shawntz/datasci-homelab datasci-homelab
    cd datasci-homelab
    ```
 
