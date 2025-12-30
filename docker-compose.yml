@@ -30,6 +30,13 @@ services:
       - ./volumes/python-packages:/home/rstudio/.local
       # Shared data directory
       - ./volumes/shared-data:/data
+      # Override configs for authentication (mount these to enable auth without rebuilding)
+      - ./config-overrides/rserver.conf:/etc/rstudio/rserver.conf:ro
+      - ./config-overrides/jupyter_server_config.py:/etc/jupyter/jupyter_server_config.py:ro
+      - ./config-overrides/start.sh:/usr/local/bin/start-services.sh:ro
+      - ./config-overrides/entrypoint.sh:/entrypoint-override.sh:ro
+    entrypoint: ["/entrypoint-override.sh"]
+    user: root
     networks:
       - datasci-network
     healthcheck:
