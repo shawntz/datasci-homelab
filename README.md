@@ -52,7 +52,50 @@ This repository provides a single source of truth for your data science environm
 - At least 8GB RAM available
 - 20GB free disk space (for images and volumes)
 
-### Installation
+## Installation
+
+## Container Registry (GHCR + Docker Hub)
+
+The Docker images are automatically mirrored to both GitHub Container Registry (GHCR) and Docker Hub, making them available across all your machines from either registry.
+
+### Pulling Pre-built Images
+
+You can pull images from either registry on any machine:
+
+**Using docker-compose (recommended):**
+```bash
+# Pulls from GHCR by default (configured in docker-compose.yml)
+docker-compose pull
+```
+
+**Pulling manually from GHCR:**
+```bash
+docker pull ghcr.io/shawntz/datasci-homelab-rstudio:latest
+docker pull ghcr.io/shawntz/datasci-homelab-jupyter:latest
+
+# Or specific versions
+docker pull ghcr.io/shawntz/datasci-homelab-rstudio:v1.0.0
+docker pull ghcr.io/shawntz/datasci-homelab-jupyter:v1.0.0
+```
+
+**Pulling manually from Docker Hub:**
+```bash
+docker pull shawnschwartz/datasci-homelab-rstudio:latest
+docker pull shawnschwartz/datasci-homelab-jupyter:latest
+
+# Or specific versions
+docker pull shawnschwartz/datasci-homelab-rstudio:v1.0.0
+docker pull shawnschwartz/datasci-homelab-jupyter:v1.0.0
+```
+
+### Choosing Your Registry
+
+By default, `docker-compose.yml` is configured to pull from GHCR. To switch to Docker Hub:
+
+1. Edit `docker-compose.yml`
+2. Comment out the GHCR image lines (lines with `ghcr.io`)
+3. Uncomment the Docker Hub image lines (lines with `shawnschwartz/`)
+4. Run `docker-compose pull` to fetch from Docker Hub
 
 1. Clone this repository:
    ```bash
@@ -139,8 +182,6 @@ This creates timestamped package lists in `package-lists/`:
 - `python_packages_TIMESTAMP.txt` - Python packages (pip format)
 - `conda_env_TIMESTAMP.yml` - Conda environment export
 
-You can commit these to git for reproducibility.
-
 ### Updating Images
 
 To update to the latest base images:
@@ -187,7 +228,7 @@ To access your homelab from anywhere:
 3. Configure the tunnel (create `~/.cloudflared/config.yml`):
    ```yaml
    tunnel: <your-tunnel-id>
-   credentials-file: /Users/shawn.schwartz/.cloudflared/<tunnel-id>.json
+   credentials-file: `~/.cloudflared/<tunnel-id>.json`
 
    ingress:
      - hostname: rstudio.yourdomain.com
@@ -203,137 +244,6 @@ To access your homelab from anywhere:
    ```
 
 5. Access remotely via your configured hostnames.
-
-## Container Registry (GHCR + Docker Hub)
-
-The Docker images are automatically mirrored to both GitHub Container Registry (GHCR) and Docker Hub, making them available across all your machines from either registry.
-
-### Publishing Images to Both Registries
-
-1. **Authenticate with GHCR:**
-
-   Create a GitHub Personal Access Token (PAT):
-   - Go to GitHub Settings → Developer settings → Personal access tokens → Tokens (classic)
-   - Click "Generate new token (classic)"
-   - Select scopes: `write:packages`, `read:packages`, `delete:packages` (optional)
-   - Copy the token
-
-   Then login:
-   ```bash
-   export GITHUB_TOKEN=your_token_here
-   echo $GITHUB_TOKEN | docker login ghcr.io -u shawntz --password-stdin
-   ```
-
-   Or use GitHub CLI:
-   ```bash
-   gh auth login
-   gh auth token | docker login ghcr.io -u shawntz --password-stdin
-   ```
-
-2. **Authenticate with Docker Hub:**
-
-   ```bash
-   docker login -u shawnschwartz
-   # Enter your Docker Hub password when prompted
-   ```
-
-3. **Build and push to both registries:**
-
-   ```bash
-   # Push with 'latest' tag to both registries
-   ./scripts/build-and-push.sh
-
-   # Push with a specific version tag
-   ./scripts/build-and-push.sh v1.0.0
-
-   # Push with custom build arguments
-   ./scripts/build-and-push.sh latest --no-cache
-   ```
-
-   The script automatically:
-   - Builds images once
-   - Tags for both GHCR and Docker Hub
-   - Pushes to both registries simultaneously
-
-### Pulling Pre-built Images
-
-Once published, you can pull images from either registry on any machine:
-
-**Using docker-compose (recommended):**
-```bash
-# Pulls from GHCR by default (configured in docker-compose.yml)
-docker-compose pull
-```
-
-**Pulling manually from GHCR:**
-```bash
-docker pull ghcr.io/shawntz/datasci-homelab-rstudio:latest
-docker pull ghcr.io/shawntz/datasci-homelab-jupyter:latest
-
-# Or specific versions
-docker pull ghcr.io/shawntz/datasci-homelab-rstudio:v1.0.0
-docker pull ghcr.io/shawntz/datasci-homelab-jupyter:v1.0.0
-```
-
-**Pulling manually from Docker Hub:**
-```bash
-docker pull shawnschwartz/datasci-homelab-rstudio:latest
-docker pull shawnschwartz/datasci-homelab-jupyter:latest
-
-# Or specific versions
-docker pull shawnschwartz/datasci-homelab-rstudio:v1.0.0
-docker pull shawnschwartz/datasci-homelab-jupyter:v1.0.0
-```
-
-### Choosing Your Registry
-
-By default, `docker-compose.yml` is configured to pull from GHCR. To switch to Docker Hub:
-
-1. Edit `docker-compose.yml`
-2. Comment out the GHCR image lines (lines with `ghcr.io`)
-3. Uncomment the Docker Hub image lines (lines with `shawnschwartz/`)
-4. Run `docker-compose pull` to fetch from Docker Hub
-
-### Setting Image Visibility
-
-**GHCR (GitHub Container Registry):**
-
-By default, GHCR packages are private. To make them public:
-
-1. Go to https://github.com/shawntz?tab=packages
-2. Click on the package (e.g., `datasci-homelab-rstudio`)
-3. Click "Package settings"
-4. Scroll to "Danger Zone" → "Change visibility"
-5. Select "Public"
-
-**Docker Hub:**
-
-By default, Docker Hub repositories are public. To make them private:
-
-1. Go to https://hub.docker.com/repositories/shawnschwartz
-2. Click on the repository (e.g., `datasci-homelab-rstudio`)
-3. Click "Settings"
-4. Change visibility to "Private"
-
-### Benefits of Using Container Registries
-
-- **Consistency**: Same environment across Mac Studio, laptop, and cloud instances
-- **Fast deployment**: Pull pre-built images instead of rebuilding (saves 10-15 minutes)
-- **Version control**: Tag images with versions for reproducibility
-- **CI/CD ready**: Can be integrated with GitHub Actions for automated builds
-- **Redundancy**: Images mirrored to both registries for availability
-
-**Why GHCR?**
-- Integrated with GitHub (same account, same permissions)
-- Private by default (good for sensitive environments)
-- Free unlimited storage for public packages
-- Tight integration with GitHub Actions
-
-**Why Docker Hub?**
-- Industry standard, widely recognized
-- Public by default (easy sharing)
-- Better discoverability for public projects
-- May be required by some deployment platforms
 
 ## Directory Structure
 
@@ -419,7 +329,8 @@ docker-compose down
 docker system prune -a
 ```
 
-To completely reset (WARNING: deletes all packages and data):
+> [!WARNING]
+> To completely reset (WARNING: deletes all packages and data):
 ```bash
 docker-compose down -v
 rm -rf volumes/
