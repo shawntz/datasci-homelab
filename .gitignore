@@ -1,0 +1,42 @@
+# Environment variables and secrets
+.env
+
+# Docker volumes (persistent data - do not commit)
+volumes/
+
+# Docker-related
+.dockerignore
+docker-compose.override.yml
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# IDE-specific files
+.vscode/
+.idea/
+*.iml
+
+# Logs
+*.log
+logs/
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# Backup files
+*.bak
+*.backup
+
+# Package lists (optionally commit these for reproducibility)
+# Uncomment if you want to track them:
+# !scripts/package-lists/
+
+# Cloudflared configuration (contains tunnel credentials)
+*.json
+cloudflared/
