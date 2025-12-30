@@ -1,0 +1,49 @@
+# Images are mirrored to both GHCR and Docker Hub
+# GHCR (default): ghcr.io/shawntz/datasci-homelab:${IMAGE_TAG}
+# Docker Hub: shawnschwartz/datasci-homelab:${IMAGE_TAG}
+
+services:
+  homelab:
+    # Pull from GHCR (default - faster, integrated with GitHub)
+    image: ghcr.io/shawntz/datasci-homelab:${IMAGE_TAG:-latest}
+    # Alternative: Pull from Docker Hub (uncomment line below and comment line above)
+    # image: shawnschwartz/datasci-homelab:${IMAGE_TAG:-latest}
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: datasci-homelab
+    restart: unless-stopped
+    ports:
+      - "${RSTUDIO_PORT:-8787}:8787"  # RStudio Server
+      - "${JUPYTER_PORT:-8888}:8888"  # JupyterLab
+    environment:
+      - DISABLE_AUTH=${DISABLE_AUTH:-true}
+      - JUPYTER_ENABLE_LAB=yes
+    volumes:
+      # User home directory for projects, notebooks, and configs
+      - ./volumes/home:/home/rstudio
+      # R package library persistence
+      - ./volumes/r-library:/usr/local/lib/R/site-library
+      # Python user packages persistence
+      - ./volumes/python-packages:/home/rstudio/.local
+      # Shared data directory
+      - ./volumes/shared-data:/data
+    networks:
+      - datasci-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8787", "||", "curl", "-f", "http://localhost:8888"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    command: both  # Options: rstudio, jupyter, both
+
+networks:
+  datasci-network:
+    driver: bridge
+
+volumes:
+  home:
+  r-library:
+  python-packages:
+  shared-data:
