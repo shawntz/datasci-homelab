@@ -18,6 +18,7 @@ services:
       - "${JUPYTER_PORT:-8888}:8888"  # JupyterLab
     environment:
       - DISABLE_AUTH=${DISABLE_AUTH:-false}
+      - RSTUDIO_USER=${RSTUDIO_USER:-rstudio}
       - RSTUDIO_PASSWORD=${RSTUDIO_PASSWORD:-rstudio}
       - JUPYTER_TOKEN=${JUPYTER_TOKEN}
       - JUPYTER_ENABLE_LAB=yes
