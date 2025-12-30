@@ -36,6 +36,7 @@ services:
       - ./config-overrides/jupyter_server_config.py:/etc/jupyter/jupyter_server_config.py:ro
       - ./config-overrides/start.sh:/usr/local/bin/start-services.sh:ro
       - ./config-overrides/entrypoint.sh:/entrypoint-override.sh:ro
+      - ./config-overrides:/config-overrides:ro
     entrypoint: ["/entrypoint-override.sh"]
     user: root
     networks:

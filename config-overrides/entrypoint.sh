@@ -26,5 +26,18 @@ if [ -n "${RSTUDIO_PASSWORD}" ]; then
     echo "$RSTUDIO_USER:${RSTUDIO_PASSWORD}" | chpasswd
 fi
 
+# Set up RStudio preferences for the user
+echo "Configuring RStudio preferences..."
+USER_HOME=$(eval echo ~$RSTUDIO_USER)
+RSTUDIO_CONFIG_DIR="$USER_HOME/.config/rstudio"
+mkdir -p "$RSTUDIO_CONFIG_DIR"
+
+# Copy default preferences if the file exists in config-overrides
+if [ -f /config-overrides/rstudio-config/rstudio-prefs.json ]; then
+    cp /config-overrides/rstudio-config/rstudio-prefs.json "$RSTUDIO_CONFIG_DIR/rstudio-prefs.json"
+    chown -R $RSTUDIO_USER:$RSTUDIO_USER "$RSTUDIO_CONFIG_DIR"
+    echo "✓ RStudio preferences applied"
+fi
+
 # Switch to the user and run the original startup script
 exec su -s /bin/bash -c "/usr/local/bin/start-services.sh $*" "$RSTUDIO_USER"
