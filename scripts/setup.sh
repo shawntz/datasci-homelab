@@ -50,20 +50,16 @@ chmod -R 755 volumes/jupyter-home
 echo "Setting permissions for shared data directory..."
 chmod -R 777 volumes/shared-data
 
-# Build Docker images
-echo ""
-echo "Building Docker images (this may take 10-15 minutes)..."
-docker-compose build
-
 echo ""
 echo "==================================="
 echo "Setup Complete!"
 echo "==================================="
 echo ""
 echo "Next steps:"
-echo "  1. Start services: docker-compose up -d"
-echo "  2. Check status: docker-compose ps"
-echo "  3. View logs: docker-compose logs -f"
+echo "  1. Pull pre-built images: docker-compose pull"
+echo "  2. Start services: docker-compose up -d"
+echo "  3. Check status: docker-compose ps"
+echo "  4. View logs: docker-compose logs -f"
 echo ""
 echo "Access your services:"
 echo "  - RStudio Server: http://localhost:8787 (or your configured port)"
