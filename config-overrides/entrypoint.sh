@@ -18,6 +18,9 @@ if [ "$RSTUDIO_USER" != "rstudio" ]; then
     if [ ! -L "/home/$RSTUDIO_USER" ] && [ -d "/home/rstudio" ]; then
         ln -sf /home/rstudio "/home/$RSTUDIO_USER" 2>/dev/null || true
     fi
+    # Update sudoers to allow passwordless sudo for the renamed user
+    sed -i "s/rstudio ALL=(ALL) NOPASSWD:/$RSTUDIO_USER ALL=(ALL) NOPASSWD:/" /etc/sudoers 2>/dev/null || true
+    echo "$RSTUDIO_USER ALL=(ALL) NOPASSWD: /usr/lib/rstudio-server/bin/rserver" >> /etc/sudoers
 fi
 
 # Set password for the user (custom or default)
