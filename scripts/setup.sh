@@ -30,6 +30,13 @@ if [ ! -f .env ]; then
     read -p "Press Enter to continue after updating .env, or Ctrl+C to exit..."
 fi
 
+# Set proper permissions for Docker build context files
+echo "Setting permissions for build files..."
+chmod 644 Dockerfile 2>/dev/null || true
+chmod 644 docker-compose.yml 2>/dev/null || true
+chmod 644 config/*.json config/*.py config/*.R config/*.txt 2>/dev/null || true
+chmod 755 scripts/*.sh 2>/dev/null || true
+
 # Create volume directories if they don't exist
 echo "Creating volume directories..."
 mkdir -p volumes/rstudio-packages
