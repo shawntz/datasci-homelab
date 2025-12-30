@@ -54,13 +54,38 @@ This repository provides a single source of truth for your data science environm
 
 ## Installation
 
-## Container Registry (GHCR + Docker Hub)
+Follow these steps in order to set up your data science homelab:
 
-The Docker images are automatically mirrored to both GitHub Container Registry (GHCR) and Docker Hub, making them available across all your machines from either registry.
+### Step 1: Clone the Repository
 
-### Pulling Pre-built Images
+```bash
+git clone https://github.com/shawntz/datasci-homelab datasci-homelab
+cd datasci-homelab
+```
 
-You can pull images from either registry on any machine:
+### Step 2: Run the Setup Script
+
+This creates necessary directories and configuration files:
+
+```bash
+./scripts/setup.sh
+```
+
+### Step 3: Configure Your Environment
+
+Edit the `.env` file and set secure passwords:
+
+```bash
+nano .env  # or use your preferred editor
+```
+
+Update these values:
+- `RSTUDIO_PASSWORD` - your RStudio password
+- `JUPYTER_TOKEN` - your Jupyter access token
+
+### Step 4: Pull the Pre-built Images
+
+The Docker images are automatically mirrored to both GitHub Container Registry (GHCR) and Docker Hub.
 
 **Using docker-compose (recommended):**
 ```bash
@@ -68,52 +93,28 @@ You can pull images from either registry on any machine:
 docker-compose pull
 ```
 
-**Pulling manually from GHCR:**
+**Or pull manually from GHCR:**
 ```bash
 docker pull ghcr.io/shawntz/datasci-homelab:latest
 ```
 
-**Pulling manually from Docker Hub:**
+**Or pull manually from Docker Hub:**
 ```bash
 docker pull shawnschwartz/datasci-homelab:latest
 ```
 
-### Choosing Your Registry
+> **Note:** By default, `docker-compose.yml` is configured to pull from GHCR. To switch to Docker Hub, edit `docker-compose.yml` and comment out the GHCR image lines (lines with `ghcr.io`), then uncomment the Docker Hub image lines (lines with `shawnschwartz/`).
 
-By default, `docker-compose.yml` is configured to pull from GHCR. To switch to Docker Hub:
+### Step 5: Start the Services
 
-1. Edit `docker-compose.yml`
-2. Comment out the GHCR image lines (lines with `ghcr.io`)
-3. Uncomment the Docker Hub image lines (lines with `shawnschwartz/`)
-4. Run `docker-compose pull` to fetch from Docker Hub
+```bash
+docker-compose up -d
+```
 
-1. Clone this repository:
-   ```bash
-   git clone https://github.com/shawntz/datasci-homelab datasci-homelab
-   cd datasci-homelab
-   ```
+### Step 6: Access Your Environments
 
-2. Run the setup script:
-   ```bash
-   ./scripts/setup.sh
-   ```
-
-3. Edit `.env` and set secure passwords:
-   ```bash
-   nano .env  # or use your preferred editor
-   ```
-   Update:
-   - `RSTUDIO_PASSWORD` - your RStudio password
-   - `JUPYTER_TOKEN` - your Jupyter access token
-
-4. Start the services:
-   ```bash
-   docker-compose up -d
-   ```
-
-5. Access your environments:
-   - RStudio: http://localhost:8787 (username: `rstudio`, password: from .env)
-   - Jupyter: http://localhost:8888 (token: from .env)
+- **RStudio:** http://localhost:8787 (username: `rstudio`, password: from .env)
+- **Jupyter:** http://localhost:8888 (token: from .env)
 
 ## Usage
 
