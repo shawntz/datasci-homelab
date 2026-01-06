@@ -5,9 +5,9 @@
 services:
   homelab:
     # Pull from GHCR (default - faster, integrated with GitHub)
-    image: ghcr.io/shawntz/datasci-homelab:${IMAGE_TAG:-latest}
+    # image: ghcr.io/shawntz/datasci-homelab:${IMAGE_TAG:-latest}
     # Alternative: Pull from Docker Hub (uncomment line below and comment line above)
-    # image: shawnschwartz/datasci-homelab:${IMAGE_TAG:-latest}
+    image: shawnschwartz/datasci-homelab:${IMAGE_TAG:-latest}
     build:
       context: .
       dockerfile: Dockerfile
