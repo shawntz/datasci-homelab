@@ -146,11 +146,11 @@ flowchart LR
     end
 
     subgraph Container["Container"]
-        C1[/home/rstudio]
-        C2[/usr/local/lib/R/site-library]
-        C3[/home/rstudio/.local]
-        C4[/data]
-        C5[/config-overrides]
+        C1["/home/rstudio"]
+        C2["/usr/local/lib/R/site-library"]
+        C3["/home/rstudio/.local"]
+        C4["/data"]
+        C5["/config-overrides"]
     end
 
     H1 -.->|mount| C1
@@ -319,7 +319,7 @@ flowchart LR
         R1[User] --> R2[Browser]
         R2 --> R3[RStudio Login]
         R3 --> R4[PAM]
-        R4 --> R5[/etc/passwd]
+        R4 --> R5["/etc/passwd"]
     end
 
     subgraph Jupyter["Jupyter Authentication"]
@@ -449,18 +449,18 @@ flowchart TD
         end
 
         subgraph usr["/usr"]
-            usr_lib[/usr/lib/R/library\nSystem R packages]
-            usr_local[/usr/local/lib/R/site-library\nUser R packages]
+            usr_lib["System R packages"]
+            usr_local["User R packages (volume)"]
         end
 
         subgraph home["/home/rstudio"]
-            home_config[.config/rstudio/\nrstudio-prefs.json]
-            home_local[.local\nPython packages]
-            home_work[work\nDefault workdir]
+            home_config["rstudio-prefs.json"]
+            home_local["Python packages (volume)"]
+            home_work["Default workdir"]
         end
 
-        data[/data\nShared data]
-        config[/config-overrides\nMounted configs]
+        data["Shared data (volume)"]
+        config["Mounted configs"]
     end
 
     style usr_local fill:#c8e6c9
