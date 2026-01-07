@@ -207,28 +207,28 @@ docker-compose ps
 <div class="feature-grid" markdown>
 
 <div class="feature-card" markdown>
-### :material-package: Install Packages
+### Install Packages
 Learn how to install and persist R and Python packages.
 
 [Usage Guide →](usage.md)
 </div>
 
 <div class="feature-card" markdown>
-### :material-cog: Customize
+### Customize
 Configure themes, keybindings, and preferences.
 
 [Customization →](customization.md)
 </div>
 
 <div class="feature-card" markdown>
-### :material-cloud: Remote Access
+### Remote Access
 Set up Cloudflare Tunnel for remote access.
 
 [Remote Access →](remote-access.md)
 </div>
 
 <div class="feature-card" markdown>
-### :material-information: Learn More
+### Learn More
 Understand the architecture and design decisions.
 
 [Architecture →](architecture.md)

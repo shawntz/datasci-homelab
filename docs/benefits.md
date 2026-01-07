@@ -274,6 +274,6 @@ The containerized approach trades a small upfront learning curve for:
 
 **Ready to try it?**
 
-[:material-download: Get Started](getting-started.md){ .md-button .md-button--primary }
+[Get Started](getting-started.md){ .md-button .md-button--primary }
 
 </div>

@@ -40,3 +40,5 @@ temp/
 # Cloudflared configuration (contains tunnel credentials)
 *.json
 cloudflared/
+
+site/

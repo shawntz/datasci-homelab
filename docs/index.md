@@ -7,22 +7,22 @@ A complete, containerized data science environment with **RStudio Server** and *
 <div class="feature-grid" markdown>
 
 <div class="feature-card" markdown>
-### :material-docker: 1 Container, 2 IDEs
+### 1 Container, 2 IDEs
 Run both RStudio Server and JupyterLab from a single Docker container. Switch between R and Python workflows seamlessly.
 </div>
 
 <div class="feature-card" markdown>
-### :material-package-variant: Persistent Packages
+### Persistent Packages
 Install packages once, keep them forever. Volumes persist your R and Python libraries across container restarts and rebuilds.
 </div>
 
 <div class="feature-card" markdown>
-### :material-cog-sync: Zero Configuration
+### Zero Configuration
 Pre-configured with sensible defaults. Pull the image, start the container, and you're ready to work.
 </div>
 
 <div class="feature-card" markdown>
-### :material-chip: Multi-Architecture
+### Multi-Architecture
 Native support for both AMD64 (Intel/AMD) and ARM64 (Apple Silicon). No emulation, no performance penalty.
 </div>
 
@@ -97,8 +97,8 @@ Then open:
 - **RStudio**: [http://localhost:8787](http://localhost:8787)
 - **JupyterLab**: [http://localhost:8888](http://localhost:8888)
 
-[:material-rocket-launch: Full Installation Guide](getting-started.md){ .md-button .md-button--primary }
-[:material-book-open-variant: Why This Exists](motivation.md){ .md-button }
+[Full Installation Guide](getting-started.md){ .md-button .md-button--primary }
+[Why This Exists](motivation.md){ .md-button }
 
 ---
 
@@ -147,6 +147,6 @@ Then open:
 
 **Ready to get started?**
 
-[:material-download: Installation Guide](getting-started.md){ .md-button .md-button--primary }
+[Installation Guide](getting-started.md){ .md-button .md-button--primary }
 
 </div>

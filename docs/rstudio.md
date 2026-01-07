@@ -89,14 +89,14 @@ The default pane layout is optimized for focused coding:
 flowchart TB
     subgraph top[" "]
         direction LR
-        A["Source\n(Primary)"]
-        B["Files / Plots\nHelp / Packages"]
+        A["Source<br>(Primary)"]
+        B["Files / Plots<br>Help / Packages"]
     end
 
     subgraph bottom[" "]
         direction LR
         C["Console"]
-        D["Environment\nHistory / Git"]
+        D["Environment<br>History / Git"]
     end
 
     top ~~~ bottom

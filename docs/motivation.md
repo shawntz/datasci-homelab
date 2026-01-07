@@ -183,7 +183,7 @@ If that resonates with you, welcome aboard.
 
 **Ready to try it?**
 
-[:material-download: Get Started](getting-started.md){ .md-button .md-button--primary }
-[:material-scale-balance: See the Benefits](benefits.md){ .md-button }
+[Get Started](getting-started.md){ .md-button .md-button--primary }
+[See the Benefits](benefits.md){ .md-button }
 
 </div>
