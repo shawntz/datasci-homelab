@@ -9,7 +9,7 @@ repo_name: shawntz/datasci-homelab
 repo_url: https://github.com/shawntz/datasci-homelab
 edit_uri: edit/main/docs/
 
-copyright: Copyright &copy; 2024-2025 Shawn Schwartz
+copyright: Copyright &copy; 2026 Shawn Schwartz
 
 theme:
   name: material
@@ -17,15 +17,15 @@ theme:
   palette:
     - media: "(prefers-color-scheme: light)"
       scheme: default
-      primary: indigo
-      accent: indigo
+      primary: teal
+      accent: orange
       toggle:
         icon: material/brightness-7
         name: Switch to dark mode
     - media: "(prefers-color-scheme: dark)"
       scheme: slate
-      primary: indigo
-      accent: indigo
+      primary: teal
+      accent: orange
       toggle:
         icon: material/brightness-4
         name: Switch to light mode

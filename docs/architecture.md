@@ -10,9 +10,9 @@ Technical details of how DataSci Homelab is built and operates.
 flowchart TB
     subgraph Host["Host Machine"]
         subgraph Container["Docker Container"]
-            RS["RStudio Server<br/>Port 8787"]
-            JL["JupyterLab<br/>Port 8888"]
-            RS & JL --> ENV["Shared User Environment<br/>(R + Python)"]
+            RS[RStudio Server\nPort 8787]
+            JL[JupyterLab\nPort 8888]
+            RS & JL --> ENV[Shared User Environment\nR + Python]
         end
 
         subgraph Volumes["Docker Volumes"]
@@ -46,15 +46,15 @@ Built on Ubuntu 22.04 LTS for:
 
 ```mermaid
 flowchart LR
-    subgraph Image["Docker Image (~4-5GB)"]
+    subgraph Image["Docker Image (~8GB)"]
         direction TB
-        L1["Layer 1: System packages<br/>~500MB"]
-        L2["Layer 2: R installation<br/>~300MB"]
-        L3["Layer 3: RStudio Server<br/>~700MB"]
-        L4["Layer 4: Python<br/>~200MB"]
-        L5["Layer 5: Quarto + TinyTeX<br/>~500MB"]
-        L6["Layer 6: R packages<br/>~1GB"]
-        L7["Layer 7: Python packages<br/>~800MB"]
+        L1[Layer 1: System packages\n~500MB]
+        L2[Layer 2: R installation\n~300MB]
+        L3[Layer 3: RStudio Server\n~700MB]
+        L4[Layer 4: Python\n~200MB]
+        L5[Layer 5: Quarto + TinyTeX\n~500MB]
+        L6[Layer 6: R packages\n~1GB]
+        L7[Layer 7: Python packages\n~800MB]
 
         L1 --> L2 --> L3 --> L4 --> L5 --> L6 --> L7
     end
@@ -202,8 +202,8 @@ flowchart LR
     end
 
     subgraph Container["Container"]
-        C1["RStudio Server<br/>0.0.0.0:8787"]
-        C2["JupyterLab<br/>0.0.0.0:8888"]
+        C1[RStudio Server\n0.0.0.0:8787]
+        C2[JupyterLab\n0.0.0.0:8888]
     end
 
     B1 --> H1 --> C1
@@ -219,8 +219,8 @@ flowchart LR
 ```mermaid
 flowchart TD
     A[Internet] --> B[Cloudflare Network]
-    B --> C[cloudflared<br/>Running on host]
-    C --> D[Docker Container<br/>localhost:8787/8888]
+    B --> C[cloudflared\nRunning on host]
+    C --> D[Docker Container\nlocalhost:8787/8888]
 
     style A fill:#e1f5fe
     style B fill:#fff3e0
@@ -449,18 +449,18 @@ flowchart TD
         end
 
         subgraph usr["/usr"]
-            usr_lib["/usr/lib/R/library<br/>(System R packages)"]
-            usr_local["/usr/local/lib/R/site-library<br/>(User R packages) 📦"]
+            usr_lib[/usr/lib/R/library\nSystem R packages]
+            usr_local[/usr/local/lib/R/site-library\nUser R packages]
         end
 
-        subgraph home["/home/rstudio 📦"]
-            home_config["/.config/rstudio/<br/>rstudio-prefs.json"]
-            home_local["/.local<br/>(Python packages) 📦"]
-            home_work["/work<br/>(Default workdir)"]
+        subgraph home["/home/rstudio"]
+            home_config[.config/rstudio/\nrstudio-prefs.json]
+            home_local[.local\nPython packages]
+            home_work[work\nDefault workdir]
         end
 
-        data["/data 📦<br/>(Shared data)"]
-        config["/config-overrides 📦<br/>(Mounted configs)"]
+        data[/data\nShared data]
+        config[/config-overrides\nMounted configs]
     end
 
     style usr_local fill:#c8e6c9

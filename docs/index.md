@@ -7,7 +7,7 @@ A complete, containerized data science environment with **RStudio Server** and *
 <div class="feature-grid" markdown>
 
 <div class="feature-card" markdown>
-### :material-docker: One Container, Two IDEs
+### :material-docker: 1 Container, 2 IDEs
 Run both RStudio Server and JupyterLab from a single Docker container. Switch between R and Python workflows seamlessly.
 </div>
 
@@ -30,11 +30,29 @@ Native support for both AMD64 (Intel/AMD) and ARM64 (Apple Silicon). No emulatio
 
 ---
 
+## Why Not Just Use RStudio Desktop?
+
+Here's a secret: **RStudio Desktop is just an Electron app** — a web browser wrapped in a native window. You're already using a browser to run RStudio, it's just hidden from you.
+
+So why install and maintain a separate application when you can:
+
+- **Open RStudio as a browser tab** — or install it as a Progressive Web App (PWA) for a native-like experience
+- **Clean up your dock** — no more juggling RStudio, VS Code, and other IDE icons
+- **Skip the installers** — no downloading `.dmg` files, no "drag to Applications," no update prompts
+- **Containerize everything** — R, Python, packages, and configurations all managed in one place
+
+With RStudio Server running in Docker, you get the exact same interface with none of the desktop app baggage. Your browser becomes your IDE, and Docker handles the rest.
+
+!!! tip "Pro tip: Install as PWA"
+    In Chrome or Edge, click the install icon in the address bar to add RStudio Server as a standalone app. You get a dedicated window, dock icon, and cmd+tab switching — without actually installing anything.
+
+---
+
 ## What's Included
 
 === "RStudio Server"
 
-    - **R 4.4.2** with full development tools
+    - **R 4.5.2** with full development tools
     - **Tidyverse** ecosystem pre-installed
     - **Quarto** for reproducible publishing
     - **TinyTeX** for LaTeX/PDF output
@@ -44,7 +62,7 @@ Native support for both AMD64 (Intel/AMD) and ARM64 (Apple Silicon). No emulatio
 === "JupyterLab"
 
     - **JupyterLab 4.3+** with modern interface
-    - **Python 3** with scientific stack
+    - **Python 3.10** with scientific stack
     - **R kernel** via IRkernel
     - Git integration and diff tools
     - Interactive widgets support
@@ -117,9 +135,9 @@ Then open:
 | Component | Version |
 |-----------|---------|
 | Base OS | Ubuntu 22.04 LTS |
-| R | 4.4.2 |
+| R | 4.5.2 |
 | RStudio Server | 2025.12.0 |
-| Python | 3.x |
+| Python | 3.10 |
 | JupyterLab | 4.3+ |
 | Quarto | 1.8.26 |
 

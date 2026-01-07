@@ -116,16 +116,16 @@ install.packages("experimental_package")
 flowchart LR
     subgraph Local["Local Development"]
         direction TB
-        L1["Works on my Mac"] --> L2["Breaks on colleague's Windows"]
-        L2 --> L3["Different behavior on Linux server"]
-        L3 --> L4["'It worked in development!'"]
+        L1[Works on my Mac] --> L2[Breaks on Windows]
+        L2 --> L3[Different on Linux]
+        L3 --> L4[It worked locally!]
     end
 
     subgraph Container["Container Development"]
         direction TB
-        C1["Works in container locally"] --> C2["Same container runs on server"]
-        C2 --> C3["Same container runs in cloud"]
-        C3 --> C4["Behavior is identical everywhere ✓"]
+        C1[Works in container] --> C2[Same on server]
+        C2 --> C3[Same in cloud]
+        C3 --> C4[Identical everywhere]
     end
 
     style Local fill:#ffcdd2
@@ -144,7 +144,7 @@ Be honest about trade-offs:
 
 - **You need GPU access** — Container GPU passthrough is complex
 - **You're doing only one thing** — Just R? Just Python? Local may be simpler
-- **You have limited disk space** — Docker images are 4-5GB
+- **You have limited disk space** — Docker image is ~8GB
 - **You're learning** — Understanding local installation teaches fundamentals
 - **You need native performance** — Containers have minimal overhead, but it exists
 
@@ -241,7 +241,7 @@ Be honest about trade-offs:
 ### Costs
 
 - Docker installation (~500MB)
-- Image download (~4-5GB)
+- Image download (~8GB)
 - Learning basic Docker commands
 - Slight memory overhead
 

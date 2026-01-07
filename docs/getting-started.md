@@ -98,7 +98,7 @@ The pre-built image is available from GitHub Container Registry (GHCR) and Docke
     ```
 
 !!! info "Image Size"
-    The image is approximately 4-5GB. Initial pull may take a few minutes depending on your connection.
+    The image is approximately 8GB. Initial pull may take a few minutes depending on your connection.
 
 ---
 

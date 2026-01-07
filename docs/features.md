@@ -21,7 +21,7 @@ Everything included in DataSci Homelab, organized by category.
 
 | Component | Version |
 |-----------|---------|
-| **R** | 4.4.2 |
+| **R** | 4.5.2 |
 | **RStudio Server** | 2025.12.0 |
 
 ### Pre-installed R Packages
@@ -106,7 +106,7 @@ Everything included in DataSci Homelab, organized by category.
 
 | Component | Version |
 |-----------|---------|
-| **Python** | 3.x (system) |
+| **Python** | 3.10 |
 | **pip** | Latest |
 | **JupyterLab** | 4.3+ |
 
