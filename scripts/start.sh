@@ -12,6 +12,13 @@ echo "=========================================="
 echo "Mode: ${MODE}"
 echo ""
 
+# Ensure R library directory exists and has correct permissions
+echo "Setting up R user library..."
+mkdir -p /home/rstudio/R/library
+chmod -R 755 /home/rstudio/R
+echo "R library directory ready"
+echo ""
+
 start_rstudio() {
     echo "Starting RStudio Server on port 8787..."
     sudo /usr/lib/rstudio-server/bin/rserver --server-daemonize=0 &
