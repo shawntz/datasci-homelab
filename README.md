@@ -338,6 +338,30 @@ docker-compose build
 docker-compose up -d
 ```
 
+### RStudio Preferences
+
+RStudio preferences (theme, keybindings, pane layout, etc.) are tracked in the repo and applied automatically on container startup.
+
+**Location:** `config-overrides/rstudio-config/rstudio-prefs.json`
+
+**To update preferences after changing settings in RStudio:**
+```bash
+cp volumes/home/.config/rstudio/rstudio-prefs.json config-overrides/rstudio-config/
+git add config-overrides/rstudio-config/rstudio-prefs.json
+git commit -m "Update RStudio preferences"
+```
+
+**Current defaults include:**
+- Vim keybindings
+- Xcode theme with SF Mono font
+- Relative line numbers
+- Rainbow parentheses
+- Auto-save on blur
+- Air formatter with reformat on save
+- Custom pane layout with extra source column
+
+No image rebuild is required - preferences are mounted and applied on each `docker-compose up`.
+
 ### Changing Ports
 
 Edit `.env`:

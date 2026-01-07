@@ -30,6 +30,13 @@ if [ ! -f .env ]; then
     read -p "Press Enter to continue after updating .env, or Ctrl+C to exit..."
 fi
 
+# Set proper permissions for Docker build context files
+echo "Setting permissions for build files..."
+chmod 644 Dockerfile 2>/dev/null || true
+chmod 644 docker-compose.yml 2>/dev/null || true
+chmod 644 config/*.json config/*.py config/*.R config/*.txt 2>/dev/null || true
+chmod 755 scripts/*.sh 2>/dev/null || true
+
 # Create volume directories if they don't exist
 echo "Creating volume directories..."
 mkdir -p volumes/rstudio-packages
@@ -50,16 +57,35 @@ chmod -R 755 volumes/jupyter-home
 echo "Setting permissions for shared data directory..."
 chmod -R 777 volumes/shared-data
 
+# Check if R library volume is empty and populate if needed
+echo ""
+R_PKG_COUNT=$(ls -1 volumes/r-library 2>/dev/null | wc -l)
+if [ "$R_PKG_COUNT" -lt 10 ]; then
+    echo "R package volume is empty. Copying packages from image..."
+    echo "This is a one-time operation and may take a minute."
+
+    # Pull the image first if not already present
+    docker-compose pull
+
+    # Copy packages from image to volume
+    docker create --name temp-datasci-setup ghcr.io/shawntz/datasci-homelab:latest
+    docker cp temp-datasci-setup:/usr/local/lib/R/site-library/. ./volumes/r-library/
+    docker rm temp-datasci-setup
+
+    echo "✓ Copied $(ls -1 volumes/r-library | wc -l) R packages to volume"
+else
+    echo "R packages already present in volume ($(ls -1 volumes/r-library | wc -l) packages)"
+fi
+
 echo ""
 echo "==================================="
 echo "Setup Complete!"
 echo "==================================="
 echo ""
 echo "Next steps:"
-echo "  1. Pull pre-built images: docker-compose pull"
-echo "  2. Start services: docker-compose up -d"
-echo "  3. Check status: docker-compose ps"
-echo "  4. View logs: docker-compose logs -f"
+echo "  1. Start services: docker-compose up -d"
+echo "  2. Check status: docker-compose ps"
+echo "  3. View logs: docker-compose logs -f"
 echo ""
 echo "Access your services:"
 echo "  - RStudio Server: http://localhost:8787 (or your configured port)"

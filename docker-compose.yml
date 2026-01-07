@@ -5,9 +5,9 @@
 services:
   homelab:
     # Pull from GHCR (default - faster, integrated with GitHub)
-    image: ghcr.io/shawntz/datasci-homelab:${IMAGE_TAG:-latest}
+    # image: ghcr.io/shawntz/datasci-homelab:${IMAGE_TAG:-latest}
     # Alternative: Pull from Docker Hub (uncomment line below and comment line above)
-    # image: shawnschwartz/datasci-homelab:${IMAGE_TAG:-latest}
+    image: shawnschwartz/datasci-homelab:${IMAGE_TAG:-latest}
     build:
       context: .
       dockerfile: Dockerfile
@@ -17,7 +17,10 @@ services:
       - "${RSTUDIO_PORT:-8787}:8787"  # RStudio Server
       - "${JUPYTER_PORT:-8888}:8888"  # JupyterLab
     environment:
-      - DISABLE_AUTH=${DISABLE_AUTH:-true}
+      - DISABLE_AUTH=${DISABLE_AUTH:-false}
+      - RSTUDIO_USER=${RSTUDIO_USER:-rstudio}
+      - RSTUDIO_PASSWORD=${RSTUDIO_PASSWORD:-rstudio}
+      - JUPYTER_TOKEN=${JUPYTER_TOKEN}
       - JUPYTER_ENABLE_LAB=yes
     volumes:
       # User home directory for projects, notebooks, and configs
@@ -30,6 +33,14 @@ services:
       - ./volumes/shared-data:/data
       # JupyterLab configuration (can be modified without rebuild)
       - ./config/overrides.json:/usr/local/share/jupyter/lab/settings/overrides.json:ro
+      # Override configs for authentication (mount these to enable auth without rebuilding)
+      - ./config-overrides/rserver.conf:/etc/rstudio/rserver.conf:ro
+      - ./config-overrides/jupyter_server_config.py:/etc/jupyter/jupyter_server_config.py:ro
+      - ./config-overrides/start.sh:/usr/local/bin/start-services.sh:ro
+      - ./config-overrides/entrypoint.sh:/entrypoint-override.sh:ro
+      - ./config-overrides:/config-overrides:ro
+    entrypoint: ["/entrypoint-override.sh"]
+    user: root
     networks:
       - datasci-network
     healthcheck:
