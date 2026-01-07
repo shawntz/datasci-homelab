@@ -48,13 +48,13 @@ Built on Ubuntu 22.04 LTS for:
 flowchart LR
     subgraph Image["Docker Image (~8GB)"]
         direction TB
-        L1["System packages<br>~500MB"]
-        L2["R installation<br>~300MB"]
-        L3["RStudio Server<br>~700MB"]
-        L4["Python<br>~200MB"]
-        L5["Quarto + TinyTeX<br>~500MB"]
-        L6["R packages<br>~1GB"]
-        L7["Python packages<br>~800MB"]
+        L1["System packages<br>~1.2GB"]
+        L2["R installation<br>~600MB"]
+        L3["RStudio Server<br>~1.5GB"]
+        L4["Python<br>~400MB"]
+        L5["Quarto + TinyTeX<br>~800MB"]
+        L6["R packages<br>~2GB"]
+        L7["Python packages<br>~1.7GB"]
 
         L1 --> L2 --> L3 --> L4 --> L5 --> L6 --> L7
     end
