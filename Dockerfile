@@ -15,7 +15,7 @@ ENV DEBIAN_FRONTEND=noninteractive \
     LANG=en_US.UTF-8 \
     LC_ALL=en_US.UTF-8 \
     TZ=America/Los_Angeles \
-    R_VERSION=4.4.2 \
+    R_VERSION=4.5.0 \
     RSTUDIO_VERSION=2025.12.0+387 \
     QUARTO_VERSION=1.8.26 \
     PANDOC_VERSION=3.5 \
@@ -78,13 +78,15 @@ RUN apt-get update && \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# Install R from Ubuntu repository (4.4.x available in Ubuntu 22.04)
-RUN add-apt-repository -y ppa:c2d4u.team/c2d4u4.0+ && \
+# Install R from official CRAN repository (4.5.x)
+RUN wget -qO- https://cloud.r-project.org/bin/linux/ubuntu/marutter_pubkey.asc | tee -a /etc/apt/trusted.gpg.d/cran_ubuntu_key.asc && \
+    add-apt-repository -y "deb https://cloud.r-project.org/bin/linux/ubuntu $(lsb_release -cs)-cran40/" && \
+    add-apt-repository -y ppa:c2d4u.team/c2d4u4.0+ && \
     apt-get update && \
     apt-get install -y --no-install-recommends \
-    r-base \
-    r-base-dev \
-    r-recommended \
+    r-base=${R_VERSION}* \
+    r-base-dev=${R_VERSION}* \
+    r-recommended=${R_VERSION}* \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
@@ -188,8 +190,17 @@ RUN Rscript -e "IRkernel::installspec(user = FALSE)"
 RUN useradd -m -s /bin/bash -u 1000 ${DEFAULT_USER} && \
     echo "${DEFAULT_USER}:${DEFAULT_USER}" | chpasswd && \
     mkdir -p /home/${DEFAULT_USER}/work && \
+    mkdir -p /home/${DEFAULT_USER}/R/library && \
     chown -R ${DEFAULT_USER}:${DEFAULT_USER} /home/${DEFAULT_USER} && \
+    chmod -R 755 /home/${DEFAULT_USER}/R && \
     echo "${DEFAULT_USER} ALL=(ALL) NOPASSWD: /usr/lib/rstudio-server/bin/rserver" >> /etc/sudoers
+
+# Configure R to use user library for interactively installed packages
+RUN echo "R_LIBS_USER=/home/rstudio/R/library" >> /usr/lib/R/etc/Renviron.site && \
+    echo ".libPaths(c('/home/rstudio/R/library', .libPaths()))" >> /usr/lib/R/etc/Rprofile.site && \
+    echo "options(install.packages.check.source = 'no')" >> /usr/lib/R/etc/Rprofile.site && \
+    mkdir -p /home/rstudio/R/library && \
+    chown -R ${DEFAULT_USER}:${DEFAULT_USER} /home/${DEFAULT_USER}/R
 
 # Configure RStudio Server
 RUN echo "www-address=0.0.0.0" >> /etc/rstudio/rserver.conf && \
@@ -204,9 +215,7 @@ RUN mkdir -p /etc/jupyter && \
 
 # Copy JupyterLab configuration
 COPY config/jupyter_server_config.py /etc/jupyter/jupyter_server_config.py
-COPY config/overrides.json /usr/local/share/jupyter/lab/settings/overrides.json
-RUN chmod 644 /etc/jupyter/jupyter_server_config.py && \
-    chmod 644 /usr/local/share/jupyter/lab/settings/overrides.json
+RUN chmod 644 /etc/jupyter/jupyter_server_config.py
 
 # Create startup script for both services
 COPY scripts/start.sh /usr/local/bin/start.sh

@@ -25,12 +25,14 @@ services:
     volumes:
       # User home directory for projects, notebooks, and configs
       - ./volumes/home:/home/rstudio
-      # R package library persistence
-      - ./volumes/r-library:/usr/local/lib/R/site-library
+      # R user library (for packages installed interactively - doesn't override system packages)
+      - ./volumes/r-library:/home/rstudio/R/library
       # Python user packages persistence
       - ./volumes/python-packages:/home/rstudio/.local
       # Shared data directory
       - ./volumes/shared-data:/data
+      # JupyterLab configuration (can be modified without rebuild)
+      - ./config/overrides.json:/usr/local/share/jupyter/lab/settings/overrides.json:ro
       # Override configs for authentication (mount these to enable auth without rebuilding)
       - ./config-overrides/rserver.conf:/etc/rstudio/rserver.conf:ro
       - ./config-overrides/jupyter_server_config.py:/etc/jupyter/jupyter_server_config.py:ro
