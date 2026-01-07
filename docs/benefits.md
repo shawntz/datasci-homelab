@@ -270,10 +270,7 @@ The containerized approach trades a small upfront learning curve for:
 
 ---
 
-<div style="text-align: center; margin-top: 3rem;">
-
 **Ready to try it?**
 
-[Get Started](getting-started.md){ .md-button .md-button--primary }
+[:material-download: Get Started](getting-started.md){ .md-button .md-button--primary }
 
-</div>

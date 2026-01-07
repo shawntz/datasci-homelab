@@ -179,11 +179,9 @@ If that resonates with you, welcome aboard.
 
 ---
 
-<div style="text-align: center; margin-top: 3rem;">
 
 **Ready to try it?**
 
-[Get Started](getting-started.md){ .md-button .md-button--primary }
-[See the Benefits](benefits.md){ .md-button }
+[:material-download: Get Started](getting-started.md){ .md-button .md-button--primary }
+[:material-scale-balance: See the Benefits](benefits.md){ .md-button }
 
-</div>
