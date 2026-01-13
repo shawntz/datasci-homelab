@@ -42,5 +42,10 @@ if [ -f /config-overrides/rstudio-config/rstudio-prefs.json ]; then
     echo "✓ RStudio preferences applied"
 fi
 
+# Fix ownership of mounted volumes
+echo "Fixing volume permissions..."
+chown -R $RSTUDIO_USER:$RSTUDIO_USER /home/rstudio 2>/dev/null || true
+chown -R $RSTUDIO_USER:$RSTUDIO_USER /data 2>/dev/null || true
+
 # Switch to the user and run the original startup script
 exec su -s /bin/bash -c "/usr/local/bin/start-services.sh $*" "$RSTUDIO_USER"
