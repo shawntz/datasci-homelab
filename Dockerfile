@@ -145,8 +145,11 @@ RUN ARCH=$(dpkg --print-architecture) && \
     rm -rf /var/lib/apt/lists/*
 
 # Install TinyTeX (lightweight TeX Live distribution)
-RUN wget -qO- "https://yihui.org/tinytex/install-bin-unix.sh" | sh && \
-    /root/.TinyTeX/bin/*/tlmgr path add
+RUN mkdir -p /tinytex-install && chmod 777 /tinytex-install && \
+    TMPDIR=/tinytex-install \
+    wget -qO- "https://yihui.org/tinytex/install-bin-unix.sh" | TMPDIR=/tinytex-install bash && \
+    /root/.TinyTeX/bin/*/tlmgr path add && \
+    rm -rf /tinytex-install
 
 # Install Python 3
 RUN apt-get update && \
@@ -181,8 +184,10 @@ RUN pip install --no-cache-dir --upgrade pip setuptools wheel && \
 COPY config/packages.R /tmp/packages.R
 RUN Rscript /tmp/packages.R
 
-# Install IRkernel for Jupyter
-RUN Rscript -e "IRkernel::installspec(user = FALSE)"
+# Install IRkernel for Jupyter (ensure it's installed, then register)
+# Use Ncpus=1 for reliability under QEMU emulation during cross-compilation
+RUN Rscript -e "if (!requireNamespace('IRkernel', quietly = TRUE)) install.packages('IRkernel', Ncpus = 1L)" && \
+    Rscript -e "IRkernel::installspec(user = FALSE)"
 
 # Create default user
 RUN useradd -m -s /bin/bash -u 1000 ${DEFAULT_USER} && \

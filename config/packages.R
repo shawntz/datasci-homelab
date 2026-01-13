@@ -1,5 +1,14 @@
 options(repos = c(CRAN = "https://cloud.r-project.org"))
 
+# Detect if running under QEMU emulation (cross-compilation)
+# Use single-threaded compilation for reliability under emulation
+is_emulated <- file.exists("/dev/.buildkit_qemu_emulator") ||
+               Sys.getenv("QEMU_CPU") != "" ||
+               grepl("qemu", Sys.getenv("_"), ignore.case = TRUE)
+
+ncpus <- if (is_emulated) 1L else parallel::detectCores()
+cat(sprintf("Using %d CPU(s) for package compilation\n", ncpus))
+
 # Core tidyverse and data packages (some pre-installed in rocker/verse)
 core_pkgs <- c(
   "tidyverse",
@@ -83,7 +92,7 @@ to_install <- setdiff(all_pkgs, rownames(installed.packages()))
 
 if (length(to_install)) {
   cat("Installing packages:", paste(to_install, collapse = ", "), "\n")
-  install.packages(to_install, Ncpus = parallel::detectCores())
+  install.packages(to_install, Ncpus = ncpus)
 } else {
   cat("All packages already installed!\n")
 }
