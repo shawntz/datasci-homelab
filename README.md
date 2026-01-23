@@ -76,7 +76,7 @@ This creates necessary directories and configuration files:
 Edit the `.env` file and set secure passwords:
 
 ```bash
-nano .env  # or use your preferred editor
+vim .env  # or use your preferred editor
 ```
 
 Update these values:
